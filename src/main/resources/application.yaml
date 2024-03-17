@@ -13,3 +13,6 @@ spring:
         show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+tmdbApiKey: 58d4fb1a977f7dddeec36e364c4c1d6f
+tmdbApiToken: eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGQ0ZmIxYTk3N2Y3ZGRkZWVjMzZlMzY0YzRjMWQ2ZiIsInN1YiI6IjY1ZjcxYjE2NTkwN2RlMDEzMGU1NDYyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Y_qzDDZzE76nUpjW8yg7jHXJyy_mqKXAQm5_zCut9oE
