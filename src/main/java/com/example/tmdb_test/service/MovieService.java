@@ -19,11 +19,15 @@ import java.util.List;
 @Transactional
 public class MovieService {
 
-    @Value("${tmdbApiKey}")
     private String key;
 
-    @Value("${tmdbApiToken}")
     private String token;
+
+    public MovieService(@Value("${tmdbApiKey}") String key,
+                        @Value("${tmdbApiToken}") String token) {
+        this.key = key;
+        this.token = token;
+    }
 
     public List<MovieListItem> getPopularMovies() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
