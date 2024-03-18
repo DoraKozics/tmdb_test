@@ -9,8 +9,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Rollback
@@ -19,6 +20,9 @@ class CommentRepositoryTest {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @Test
     void testSaveComment() {
@@ -29,5 +33,37 @@ class CommentRepositoryTest {
         comment.setMovie(1L);
         Comment commentSaved = commentRepository.save(comment);
         assertNotNull(commentSaved);
+    }
+
+    @Test
+    void testFindCommentsByMovieId_Found() {
+        Author author = new Author();
+        authorRepository.save(author);
+        Comment comment = new Comment();
+        comment.setText("Comment text");
+        comment.setAuthor(author);
+        comment.setDateCreated(LocalDateTime.now());
+        comment.setMovie(1L);
+        commentRepository.save(comment);
+        List<Comment> commentsForMovie = commentRepository.findAllCommentsByMovieId(1L);
+        assertEquals(1, commentsForMovie.size());
+    }
+
+    @Test
+    void testFindCommentsByMovieId_NoComments() {
+        Author author = new Author();
+        authorRepository.save(author);
+        Comment comment = new Comment();
+        comment.setText("Comment text");
+        comment.setAuthor(author);
+        comment.setDateCreated(LocalDateTime.now());
+        comment.setMovie(1L);
+        commentRepository.save(comment);
+
+        List<Comment> allComments = commentRepository.findAll();
+        List<Comment> commentsForMovie = commentRepository.findAllCommentsByMovieId(2L);
+
+        boolean IsNotEmptyButMissing = !allComments.isEmpty() && commentsForMovie.isEmpty();
+        assertTrue(IsNotEmptyButMissing);
     }
 }
