@@ -1,5 +1,6 @@
 package com.example.tmdb_test.service;
 
+import com.example.tmdb_test.dto.outgoing.MovieDetails;
 import com.example.tmdb_test.dto.outgoing.MovieListItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,5 +58,33 @@ public class MovieService {
             popularMovies.add(new MovieListItem(movieId, title, posterPath, releaseYear));
         }
         return popularMovies;
+    }
+
+    public MovieDetails getMovieDetails(Long id) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.themoviedb.org/3/movie/" + id + "?api_key=" + key))
+                .header("accept", "application/json")
+                .header("Authorization", "Bearer " + token)
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+
+        return mapMovieDetailsToDTO(response.body());
+    }
+
+    private MovieDetails mapMovieDetailsToDTO(String response) {
+        JSONObject movieObject = new JSONObject(response);
+        MovieDetails movieDetails = new MovieDetails();
+
+        movieDetails.setId((long) movieObject.getInt("id"));
+        movieDetails.setTitle(movieObject.getString("title"));
+        movieDetails.setLanguage(movieObject.getString("original_language"));
+        movieDetails.setOverview(movieObject.getString("overview"));
+        movieDetails.setPosterPath(movieObject.getString("poster_path"));
+        movieDetails.setReleaseYear(movieObject.getString("release_date").substring(0, 4));
+        movieDetails.setVoteAverage(movieObject.getInt("vote_average"));
+        movieDetails.setVoteCount(movieObject.getInt("vote_count"));
+
+        return movieDetails;
     }
 }
