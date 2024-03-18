@@ -53,11 +53,8 @@ public class MovieService {
             String title = movieObject.getString("title");
             String posterPath = movieObject.getString("poster_path");
             String releaseYear = movieObject.getString("release_date").substring(0, 4);
-            int voteAverage = movieObject.getInt("vote_average");
-            int voteCount = movieObject.getInt("vote_count");
-            String overview = movieObject.getString("overview");
 
-            popularMovies.add(new MovieListItem(movieId, title, posterPath, releaseYear, voteAverage, voteCount, overview));
+            popularMovies.add(new MovieListItem(movieId, title, posterPath, releaseYear));
         }
         return popularMovies;
     }
