@@ -1,4 +1,31 @@
 <div class="flex justify-center p-5">
+  <div class="max-w-3xl w-full p-6 bg-white rounded-lg shadow flex flex-row">
+    <div class="h-full">
+      <img class="h-full object-cover" [src]="'https://image.tmdb.org/t/p/w500' + movieDetails?.posterPath" width="300" height="500" alt='""' typeof="foaf:Image" />
+    </div>
+    <div class="p-4 rounded-md flex flex-col justify-center">
+      <ul class="max-w-2xl">
+        <li class="flex items-center mb-2">
+          <span class="font-semibold mr-2">Title:</span>
+          <span class="text-gray-700">{{movieDetails?.title}}</span>
+        </li>
+        <li class="flex items-center mb-2">
+          <span class="font-semibold mr-2">Release Year:</span>
+          <span class="text-gray-700">{{movieDetails?.releaseYear}}</span>
+        </li>
+        <li class="flex items-center mb-2">
+          <span class="font-semibold mr-2">Vote Average:</span>
+          <span class="text-gray-700">{{movieDetails?.voteAverage}} ({{movieDetails?.voteCount}} votes)</span>
+        </li>
+        <li class="flex items-center mb-2">
+          <span class="text-gray-700">{{movieDetails?.overview}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="flex justify-center p-5">
   <div class="max-w-3xl w-full p-6 bg-white rounded-lg shadow">
     <h6 class="pb-3 text-lg font-semibold text-indigo-600">Leave a comment</h6>
     <form [formGroup]="commentForm" class="mb-6">
@@ -15,7 +42,7 @@
     <h6 class="pb-3 text-lg font-semibold text-indigo-600">Comments</h6>
     <ul>
       <li *ngFor="let comment of comments"
-        class="mb-2">
+          class="mb-2">
         <span class="font-semibold">{{comment.dateCreated}}</span>
         <p class="text-gray-600">{{comment.text}}</p>
       </li>
