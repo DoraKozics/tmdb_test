@@ -1,16 +1,22 @@
-<div class="max-w-md mx-auto p-5">
-  <form [formGroup]="commentForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<div class="flex justify-center p-5">
+  <div class="max-w-3xl w-full p-6 bg-white rounded-lg shadow">
     <h6 class="pb-3 text-lg font-semibold text-indigo-600">Leave a comment</h6>
-    <div class="mb-4">
-      <label for="authorEmail" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
-      <input type="text" id="authorEmail" formControlName="authorEmail" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-    </div>
-    <div class="mb-6">
-      <label for="text" class="block text-gray-700 text-sm font-bold mb-2">Message:</label>
-      <textarea aria-multiline="true" formControlName="text" id="text" placeholder="" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-    </div>
-    <div class="flex items-center justify-between">
-      <button type="button" (click)="sendComment()" class="bg-indigo-600 hover:bg-indigo-900 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Send</button>
-    </div>
-  </form>
-</div>
+    <form [formGroup]="commentForm" class="mb-6">
+      <label for="authorEmail">Email:</label>
+      <input type="text" id="authorEmail" formControlName="authorEmail" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 focus:outline-none focus:border-indigo-500">
+      <label for="text">Message:</label>
+      <textarea aria-multiline="true" formControlName="text" id="text" class="w-full border border-gray-300 rounded-md px-3 py-2 mb-3 focus:outline-none focus:border-indigo-500" rows="5"></textarea>
+      <button (click)="sendComment()" class="bg-indigo-600 text-white px-4 py-2 rounded-md">Send</button>
+    </form>
+
+    <h6 class="pb-3 text-lg font-semibold text-indigo-600">Comments</h6>
+    <ul>
+      <li class="mb-2">
+        <span class="font-semibold">John Doe:</span>
+        <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </li>
+      <li class="mb-2">
+        <span class="font-semibold">Jane Smith:</span>
+        <p class="text-gray-600">Pellentesque habitant morbi tristique senectus et netus et malesuada
+
+
