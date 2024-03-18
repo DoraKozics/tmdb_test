@@ -8,6 +8,7 @@ import {PopularComponent} from './domains/popular/popular.component';
 import {DetailsComponent} from './domains/details/details.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {HttpClientModule} from "@angular/common/http";
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {HttpClientModule} from "@angular/common/http";
     PopularComponent,
     DetailsComponent,
     NavbarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
