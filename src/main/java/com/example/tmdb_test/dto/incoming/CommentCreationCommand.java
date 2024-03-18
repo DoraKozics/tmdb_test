@@ -9,6 +9,8 @@ public class CommentCreationCommand {
     @Email
     private String authorEmail;
 
+    private Long movieId;
+
     public CommentCreationCommand() {
     }
 
@@ -26,5 +28,13 @@ public class CommentCreationCommand {
 
     public void setAuthorEmail(String authorEmail) {
         this.authorEmail = authorEmail;
+    }
+
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 }

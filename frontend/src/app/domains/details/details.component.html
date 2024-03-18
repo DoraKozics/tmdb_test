@@ -1,1 +1,17 @@
-<p>details works!</p>
+<div>
+  <form [formGroup]="commentForm">
+    <label
+      for="authorEmail">Email:</label>
+    <input type="text" id="authorEmail" formControlName="authorEmail"/>
+    <span>Message:</span>
+    <textarea
+      aria-multiline="true"
+      class=""
+      formControlName="text"
+      id="text"
+      placeholder=""
+      rows="5"
+    ></textarea>
+    <button (click)="sendComment()">Send</button>
+  </form>
+</div>

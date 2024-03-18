@@ -24,7 +24,7 @@ public class CommentService {
         this.authorService = authorService;
     }
 
-    public Comment createComment(CommentCreationCommand command, Long movieId) {
+    public Comment createComment(CommentCreationCommand command) {
         Author author = authorService.findAuthorByEmail(command.getAuthorEmail());
 
         if (author == null) {
@@ -33,7 +33,7 @@ public class CommentService {
 
         Comment comment = new Comment();
         comment.setAuthor(author);
-        comment.setMovie(movieId);
+        comment.setMovie(command.getMovieId());
         comment.setText(command.getText());
         comment.setDateCreated(LocalDateTime.now());
         return commentRepository.save(comment);

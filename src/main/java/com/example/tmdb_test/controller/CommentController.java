@@ -20,8 +20,8 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createComment(@RequestBody CommentCreationCommand command, @PathVariable("id") Long movieId) {
-        Comment commentCreated = commentService.createComment(command, movieId);
+    public ResponseEntity<Void> createComment(@RequestBody CommentCreationCommand command) {
+        Comment commentCreated = commentService.createComment(command);
 
         if (commentCreated != null) {
             return new ResponseEntity<>(HttpStatus.OK);
