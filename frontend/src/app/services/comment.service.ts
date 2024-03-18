@@ -7,14 +7,18 @@ import {Observable} from "rxjs";
 const BASE_URL = environment.BASE_URL + "/api/comments";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class CommentService {
 
-    constructor(private http: HttpClient) {
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    createComment(comment: CommentCreationModel): Observable<any> {
-        return this.http.post(BASE_URL, comment);
-    }
+  createComment(comment: CommentCreationModel): Observable<any> {
+    return this.http.post(BASE_URL, comment);
+  }
+
+  getAllCommentsByMovie(id: Number): Observable<any> {
+    return this.http.get(BASE_URL + "/" + id);
+  }
 }
