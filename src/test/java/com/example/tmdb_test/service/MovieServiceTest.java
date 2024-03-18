@@ -1,13 +1,15 @@
 package com.example.tmdb_test.service;
 
+import com.example.tmdb_test.dto.outgoing.MovieDetails;
 import com.example.tmdb_test.dto.outgoing.MovieListItem;
+import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MovieServiceTest {
 
@@ -26,5 +28,16 @@ class MovieServiceTest {
     void testGetPopularMovies_collect_data() throws IOException, InterruptedException {
         List<MovieListItem> results = movieService.getPopularMovies();
         assertFalse(results.isEmpty());
+    }
+
+    @Test
+    void testGetMovieDetails_Existing() throws IOException, InterruptedException {
+        MovieDetails details = movieService.getMovieDetails(763215L);
+        assertNotNull(details);
+    }
+
+    @Test
+    void testGetMovieDetails_NonExisting() {
+        assertThrows(JSONException.class, () -> movieService.getMovieDetails(0L));
     }
 }
