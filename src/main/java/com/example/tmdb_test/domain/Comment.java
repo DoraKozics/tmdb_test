@@ -20,7 +20,7 @@ public class Comment {
     @Column(name = "movie_id")
     private Long movie;
 
-    @Column(name = "text")
+    @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
     @Column(name = "date_created")

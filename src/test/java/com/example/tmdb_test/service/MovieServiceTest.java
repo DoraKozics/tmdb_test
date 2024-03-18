@@ -23,7 +23,7 @@ class MovieServiceTest {
     }
 
     @Test
-    void getPopularMovies_collect_data() throws IOException, InterruptedException {
+    void testGetPopularMovies_collect_data() throws IOException, InterruptedException {
         List<MovieListItem> results = movieService.getPopularMovies();
         assertFalse(results.isEmpty());
     }
