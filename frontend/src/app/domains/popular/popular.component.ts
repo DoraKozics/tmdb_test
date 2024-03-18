@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {MovieService} from "../../services/movie.service";
+import {MovieListItemModel} from "../../models/movieListItem.model";
 
 @Component({
   selector: 'app-popular',
@@ -8,6 +9,8 @@ import {MovieService} from "../../services/movie.service";
 })
 export class PopularComponent {
 
+  popularMovies: MovieListItemModel[] = [];
+
   constructor(private movieService: MovieService) {
     this.getPopularMovies();
   }
@@ -15,7 +18,7 @@ export class PopularComponent {
   getPopularMovies = () => {
     this.movieService.getPopularMovies().subscribe({
       next: (response) => {
-        console.log(response);
+        this.popularMovies = response;
       }
     })
   }
