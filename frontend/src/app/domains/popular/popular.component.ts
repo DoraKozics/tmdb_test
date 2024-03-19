@@ -10,6 +10,8 @@ import {MovieListItemModel} from "../../models/movieListItem.model";
 export class PopularComponent {
 
   popularMovies: MovieListItemModel[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 9;
 
   constructor(private movieService: MovieService) {
     this.getPopularMovies();
@@ -21,5 +23,19 @@ export class PopularComponent {
         this.popularMovies = response;
       }
     })
+  }
+
+  getPaginatedMovies = () => {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.popularMovies.slice(startIndex, endIndex);
+  }
+
+  nextPage = () => {
+    this.currentPage++;
+  }
+
+  previousPage = () => {
+    this.currentPage--;
   }
 }
