@@ -1,0 +1,130 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/comments:
+    post:
+      tags:
+      - comment-controller
+      operationId: createComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreationCommand'
+        required: true
+      responses:
+        "200":
+          description: OK
+  /api/movies/{id}:
+    get:
+      tags:
+      - movie-controller
+      operationId: getMovieDetailsById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/MovieDetails'
+  /api/movies/popular:
+    get:
+      tags:
+      - movie-controller
+      operationId: getPopularMovies
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MovieListItem'
+  /api/comments/{id}:
+    get:
+      tags:
+      - comment-controller
+      operationId: getAllCommentsByMovieId
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CommentListItem'
+components:
+  schemas:
+    CommentCreationCommand:
+      type: object
+      properties:
+        text:
+          type: string
+        authorEmail:
+          type: string
+        movieId:
+          type: integer
+          format: int64
+    MovieDetails:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        language:
+          type: string
+        overview:
+          type: string
+        posterPath:
+          type: string
+        releaseYear:
+          type: string
+        voteAverage:
+          type: number
+          format: double
+        voteCount:
+          type: integer
+          format: int32
+    MovieListItem:
+      type: object
+      properties:
+        movieId:
+          type: integer
+          format: int32
+        title:
+          type: string
+        posterPath:
+          type: string
+        releaseYear:
+          type: string
+    CommentListItem:
+      type: object
+      properties:
+        dateCreated:
+          type: string
+          format: date-time
+        text:
+          type: string
