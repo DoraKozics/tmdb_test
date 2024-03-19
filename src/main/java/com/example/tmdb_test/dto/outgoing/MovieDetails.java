@@ -1,8 +1,5 @@
 package com.example.tmdb_test.dto.outgoing;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MovieDetails {
 
     private Long id;
