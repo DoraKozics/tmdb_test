@@ -36,18 +36,23 @@ export class DetailsComponent {
           this.movieService.getMovieDetails(this.movieId).subscribe({
             next: (details) => {
               this.movieDetails = details;
-              console.log(this.movieDetails);
             }
           })
 
-          this.commentService.getAllCommentsByMovie(this.movieId).subscribe({
-            next: (comments) => {
-              this.comments = comments;
-            }
-          })
+          this.getAllComments();
         }
       }
     })
+  }
+
+  getAllComments() {
+    if (this.movieId) {
+      this.commentService.getAllCommentsByMovie(this.movieId).subscribe({
+        next: (comments) => {
+          this.comments = comments;
+        }
+      })
+    }
   }
 
   sendComment() {
@@ -56,6 +61,7 @@ export class DetailsComponent {
       commentData.movieId = this.movieId;
       this.commentService.createComment(commentData).subscribe({
         next: () => {
+          this.getAllComments();
         }
       })
     }
