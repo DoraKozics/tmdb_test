@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.URI;
@@ -24,22 +25,34 @@ public class MovieService {
 
     private String token;
 
+    private final RestTemplate restTemplate;
+
     public MovieService(@Value("${tmdbApiKey}") String key,
-                        @Value("${tmdbApiToken}") String token) {
+                        @Value("${tmdbApiToken}") String token,
+                        RestTemplate restTemplate) {
         this.key = key;
         this.token = token;
+        this.restTemplate = restTemplate;
     }
 
     public List<MovieListItem> getPopularMovies() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.themoviedb.org/3/movie/popular?language=en-US"))
-                .header("accept", "application/json")
-                .header("Authorization", "Bearer " + token)
-                .method("GET", HttpRequest.BodyPublishers.noBody())
-                .build();
-        HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        List<MovieListItem> popularMovies = new ArrayList<>();
+        int currentPage = 1;
+        int totalPages = 2;
 
-        return mapPopularMoviesToDTO(response.body());
+        while (currentPage <= totalPages) {
+            String url = "https://api.themoviedb.org/3/movie/popular?language=en-US" + "&page=" + currentPage;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("accept", "application/json")
+                    .header("Authorization", "Bearer " + token)
+                    .method("GET", HttpRequest.BodyPublishers.noBody())
+                    .build();
+            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            popularMovies.addAll(mapPopularMoviesToDTO(response.body()));
+            currentPage++;
+        }
+        return popularMovies;
     }
 
     private List<MovieListItem> mapPopularMoviesToDTO(String response) {
@@ -53,7 +66,7 @@ public class MovieService {
             Integer movieId = movieObject.getInt("id");
             String title = movieObject.getString("title");
             String posterPath = movieObject.getString("poster_path");
-            String releaseYear = movieObject.getString("release_date").substring(0, 4);
+            String releaseYear = getReleaseYear(movieObject.getString("release_date"));
 
             popularMovies.add(new MovieListItem(movieId, title, posterPath, releaseYear));
         }
@@ -86,5 +99,13 @@ public class MovieService {
         movieDetails.setVoteCount(movieObject.getInt("vote_count"));
 
         return movieDetails;
+    }
+
+    private String getReleaseYear(String releaseDate) {
+        if (releaseDate != null && releaseDate.length() >= 4) {
+            return releaseDate.substring(0, 4);
+        } else {
+            return releaseDate;
+        }
     }
 }

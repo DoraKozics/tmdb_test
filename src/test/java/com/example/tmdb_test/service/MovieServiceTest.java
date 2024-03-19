@@ -5,6 +5,8 @@ import com.example.tmdb_test.dto.outgoing.MovieListItem;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,9 +21,12 @@ class MovieServiceTest {
 
     private String token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGQ0ZmIxYTk3N2Y3ZGRkZWVjMzZlMzY0YzRjMWQ2ZiIsInN1YiI6IjY1ZjcxYjE2NTkwN2RlMDEzMGU1NDYyZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Y_qzDDZzE76nUpjW8yg7jHXJyy_mqKXAQm5_zCut9oE";
 
+    @Mock
+    private RestTemplate restTemplate;
+
     @BeforeEach
     void setUp() {
-        movieService = new MovieService(key, token);
+        movieService = new MovieService(key, token, restTemplate);
     }
 
     @Test
